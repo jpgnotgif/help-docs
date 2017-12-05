@@ -3,6 +3,7 @@ const request = require('request');
 const bodyParser = require('body-parser');
 const fs = require('fs');
 const topics = JSON.parse(fs.readFileSync('./topics.json', 'utf8'));
+const questionParser = require('./question-parser');
 
 const clientId     = '282209670404.282315448773';
 const clientSecret = 'eb093a3e2468d065cf9f6a9b0c0474bc';
@@ -44,12 +45,12 @@ app.get('/oauth', function(req, res) {
 
 // Route the endpoint that our slash command will point to and send back a simple response to indicate that ngrok is working
 app.post('/topic', (req, res) => {
-  const topicName = req.body.text;
-  const url = topics[topicName];
+  const questionOrTopic = req.body.text;
+  const url = questionParser(questionOrTopic);
 
   if (url !== undefined) {
-    res.send(`[help_docs] ${url}`);
+    res.send(`[help_docs] Results for "${questionOrTopic}" - ${url}`);
   } else {
-    res.send(`[help_docs] :thinking_face: could not find page for topic "${topicName}" :thinking_face:`);
+    res.send(`[help_docs] :thinking_face: could not find page for "${questionOrTopic}" :thinking_face:`);
   }
 });
