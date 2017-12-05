@@ -17,3 +17,6 @@ be the one labeled under "Forwarding" when you started ngrok
 7. Start the server like so:
 `SLACK_CLIENT_ID=<app_client_id> SLACK_SECRET_ID=<app_secret_id> npm
 start`
+
+## Adding topics and urls
+Feel free to edit `topics.json` if you want more Recurly documentation topics available for search. Key names are topic names as they are to be typed in Slack and values are the urls that you want to display.
